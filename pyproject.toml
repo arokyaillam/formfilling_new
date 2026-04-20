@@ -1,0 +1,13 @@
+[project]
+name = "auto-form-filling"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14.4"
+dependencies = [
+    "browser-use>=0.12.6",
+    "openpyxl>=3.1.5",
+    "pandas>=3.0.2",
+    "playwright>=1.58.0",
+    "streamlit>=1.56.0",
+]
