@@ -1,6 +1,7 @@
 import streamlit as st
 import asyncio
 import json
+import os
 import pandas as pd
 import random
 import re
@@ -547,7 +548,14 @@ async def batch_fill_forms(url, fill_data_list, submit=False, delay_between=3, p
 
 # Sidebar
 st.sidebar.header("Settings")
-ollama_model = st.sidebar.text_input("Ollama Model", "gemma4:31b-cloud")
+ollama_host = st.sidebar.text_input("Ollama Host", "https://ollama.com", help="Use https://ollama.com for Ollama Cloud")
+ollama_api_key = st.sidebar.text_input("Ollama API Key", type="password", help="Get from ollama.com/settings/keys")
+ollama_model = st.sidebar.text_input("Ollama Model", "gemma4:31b", help="Remove -cloud suffix for direct Cloud API")
+
+# Set env vars so ollama SDK picks them up
+os.environ["OLLAMA_HOST"] = ollama_host
+if ollama_api_key:
+    os.environ["OLLAMA_API_KEY"] = ollama_api_key
 
 # Main content
 tab1, tab2, tab3 = st.tabs(["1. Extract Form", "2. Preview Data", "3. Fill Form"])

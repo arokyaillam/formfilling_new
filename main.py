@@ -1,4 +1,5 @@
 import asyncio
+import os
 import re
 from browser_use import Agent, Browser
 from browser_use.llm.ollama.chat import ChatOllama
@@ -56,9 +57,15 @@ class CleanJSONChatOllama(ChatOllama):
 
 
 async def main():
+    # Ollama Cloud config (set env vars before creating ChatOllama)
+    os.environ["OLLAMA_HOST"] = os.getenv("OLLAMA_HOST", "https://ollama.com")
+    api_key = os.getenv("OLLAMA_API_KEY")
+    if api_key:
+        os.environ["OLLAMA_API_KEY"] = api_key
+
     # LLM
     llm = CleanJSONChatOllama(
-        model="gemma4:31b-cloud",
+        model="gemma4:31b",
         ollama_options={"num_ctx": 16000}
     )
 
